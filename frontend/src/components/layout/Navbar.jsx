@@ -1,4 +1,5 @@
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Bell, Search, ChevronDown } from "lucide-react";
 
 const pageTitles = {
@@ -11,6 +12,7 @@ const pageTitles = {
 
 const Navbar = () => {
   const { pathname } = useLocation();
+  const { user } = useSelector((state) => state.auth);
 
   const currentTitle =
     Object.entries(pageTitles).find(([path]) => pathname.startsWith(path))?.[1] ||
@@ -47,11 +49,11 @@ const Navbar = () => {
           <div className="flex items-center gap-2.5 px-2 py-1.5 rounded-xl cursor-pointer hover:bg-gray-50 transition-all duration-200">
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#6C5CE7] to-[#a29bfe] flex items-center justify-center"
               style={{ boxShadow: "0 2px 8px rgba(108,92,231,0.25)" }}>
-              <span className="text-white text-xs font-bold">AH</span>
+              <span className="text-white text-xs font-bold">{user?.fullName?.charAt(0) || "A"}</span>
             </div>
             <div className="hidden sm:flex flex-col">
-              <span className="text-sm font-semibold text-gray-800 leading-tight">Abdul Haque</span>
-              <span className="text-[11px] text-gray-400 leading-tight">Admin</span>
+              <span className="text-sm font-semibold text-gray-800 leading-tight">{user?.fullName || "Abdul Haque"}</span>
+              <span className="text-[11px] text-gray-400 leading-tight">{user?.role || "Freelancer"}</span>
             </div>
             <ChevronDown size={14} className="text-gray-400 hidden sm:block" />
           </div>
